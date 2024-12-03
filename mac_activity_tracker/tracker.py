@@ -31,8 +31,12 @@ class ActivityTracker:
     def get_active_window(self):
         window_list = CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID)
         for window in window_list:
-            if window.get('kCGWindowLayer', 0) == 0:  # Active window is usually at layer 0
+            # Check for both layer 0 and owner name to filter out system windows
+            if (window.get('kCGWindowLayer', 0) == 0 and 
+                window.get('kCGWindowOwnerName') not in ['Window Server', '']):
                 app_name = window.get('kCGWindowOwnerName', '')
+                if DEBUG:
+                    print(f"Window Info: {dict(window)}")  # Debug window properties
                 return app_name
         return None
 
