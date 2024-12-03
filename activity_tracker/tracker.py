@@ -81,61 +81,60 @@ class ActivityTracker:
                 # Always log current activity to keep stats current
                 self.log_current_activity()
 
-                if DEBUG:
-                    # Update display every second in debug mode
-                    summary, total_time = self.db.get_summary()
-                    if total_time > 0:
-                        stats = {
-                            'coding': summary.get('coding', 0),
-                            'talking': summary.get('talking', 0),
-                            'other': summary.get('other', 0),
-                            'idle': summary.get('idle', 0)
-                        }
-                        
-                        # Calculate percentages
-                        percentages = {k: (v / total_time) * 100 for k, v in stats.items()}
-                        
-                        # Convert seconds to hours and minutes for display
-                        def format_time(seconds):
-                            h = seconds // 3600
-                            m = (seconds % 3600) // 60
-                            return f"{h:02d}h {m:02d}m"
+                # Update display every second
+                summary, total_time = self.db.get_summary()
+                if total_time > 0:
+                    stats = {
+                        'coding': summary.get('coding', 0),
+                        'talking': summary.get('talking', 0),
+                        'other': summary.get('other', 0),
+                        'idle': summary.get('idle', 0)
+                    }
+                    
+                    # Calculate percentages
+                    percentages = {k: (v / total_time) * 100 for k, v in stats.items()}
+                    
+                    # Convert seconds to hours and minutes for display
+                    def format_time(seconds):
+                        h = seconds // 3600
+                        m = (seconds % 3600) // 60
+                        return f"{h:02d}h {m:02d}m"
 
-                        # Clear line and create separator
-                        print('\r' + ' ' * self.terminal_width, end='')
-                        print('\r' + Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL)
+                    # Clear line and create separator
+                    print('\r' + ' ' * self.terminal_width, end='')
+                    print('\r' + Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL)
+                    
+                    # Show current activity
+                    activity_colors = {
+                        'coding': Fore.GREEN,
+                        'talking': Fore.BLUE,
+                        'other': Fore.YELLOW,
+                        'idle': Fore.RED
+                    }
+                    current_color = activity_colors.get(self.current_activity_type, Fore.WHITE)
+                    print(f"\r{Style.BRIGHT}Current Activity: {current_color}{self.current_activity_type.upper()}{Style.RESET_ALL}")
+                    
+                    # Show statistics
+                    # Format each stat differently based on debug mode
+                    def format_stat(activity, percentage, seconds):
+                        time_str = format_time(seconds)
+                        if DEBUG:
+                            return f"{percentage:5.1f}% ({time_str} - {seconds}s)"
+                        return f"{percentage:5.1f}% ({time_str})"
                         
-                        # Show current activity
-                        activity_colors = {
-                            'coding': Fore.GREEN,
-                            'talking': Fore.BLUE,
-                            'other': Fore.YELLOW,
-                            'idle': Fore.RED
-                        }
-                        current_color = activity_colors.get(self.current_activity_type, Fore.WHITE)
-                        print(f"\r{Style.BRIGHT}Current Activity: {current_color}{self.current_activity_type.upper()}{Style.RESET_ALL}")
-                        
-                        # Show statistics
-                        # Format each stat differently based on debug mode
-                        def format_stat(activity, percentage, seconds):
-                            time_str = format_time(seconds)
-                            if DEBUG:
-                                return f"{percentage:5.1f}% ({time_str} - {seconds}s)"
-                            return f"{percentage:5.1f}% ({time_str})"
-                            
-                        stats_line = (
-                            f"{Fore.GREEN}Coding: {format_stat(stats['coding'], percentages['coding'], stats['coding'])} {Style.RESET_ALL}| "
-                            f"{Fore.BLUE}Talking: {format_stat(stats['talking'], percentages['talking'], stats['talking'])} {Style.RESET_ALL}| "
-                            f"{Fore.YELLOW}Other: {format_stat(stats['other'], percentages['other'], stats['other'])} {Style.RESET_ALL}| "
-                            f"{Fore.RED}Idle: {format_stat(stats['idle'], percentages['idle'], stats['idle'])}{Style.RESET_ALL}"
-                        )
-                        print(f"\r{stats_line}")
-                        
-                        # Bottom separator
-                        print(Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL, end='', flush=True)
-                        
-                        # Move cursor up 3 lines to overwrite on next update
-                        print('\033[3A', end='')
+                    stats_line = (
+                        f"{Fore.GREEN}Coding: {format_stat(stats['coding'], percentages['coding'], stats['coding'])} {Style.RESET_ALL}| "
+                        f"{Fore.BLUE}Talking: {format_stat(stats['talking'], percentages['talking'], stats['talking'])} {Style.RESET_ALL}| "
+                        f"{Fore.YELLOW}Other: {format_stat(stats['other'], percentages['other'], stats['other'])} {Style.RESET_ALL}| "
+                        f"{Fore.RED}Idle: {format_stat(stats['idle'], percentages['idle'], stats['idle'])}{Style.RESET_ALL}"
+                    )
+                    print(f"\r{stats_line}")
+                    
+                    # Bottom separator
+                    print(Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL, end='', flush=True)
+                    
+                    # Move cursor up 3 lines to overwrite on next update
+                    print('\033[3A', end='')
 
                 time.sleep(1)  # Check every second
 
