@@ -108,7 +108,8 @@ class ActivityTracker:
                     print('\r' + ' ' * self.terminal_width, end='')
                     print('\r' + Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL)
                     
-                    # Show current activity
+                    # Show current activity (with extra clearing)
+                    print('\r' + ' ' * self.terminal_width, end='')
                     activity_colors = {
                         'coding': Fore.GREEN,
                         'talking': Fore.CYAN,
