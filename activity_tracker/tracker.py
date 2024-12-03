@@ -142,7 +142,7 @@ class ActivityTracker:
             self.log_current_activity()
             self.mouse_listener.stop()
             self.keyboard_listener.stop()
-            print("\n")  # Add newline after interrupt
+            print("\n\n")  # Add newline after interrupt
 
     def print_summary(self):
         summary, total_time = self.db.get_summary()
@@ -155,10 +155,7 @@ class ActivityTracker:
 
 def main():
     tracker = ActivityTracker()
-    try:
-        tracker.start()
-    except KeyboardInterrupt:
-        tracker.print_summary()
+    tracker.start()
 
 if __name__ == '__main__':
     main()
