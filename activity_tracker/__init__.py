@@ -1,8 +1,7 @@
 """Activity Tracker - Monitor and analyze your daily work activities."""
 
-__version__ = "0.1.0"
-
+from ._version import __version__
 from .tracker import ActivityTracker
 from .database import DatabaseHandler
 
-__all__ = ['ActivityTracker', 'DatabaseHandler']
+__all__ = ['ActivityTracker', 'DatabaseHandler', '__version__']

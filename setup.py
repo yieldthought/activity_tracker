@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 import os
-from activity_tracker import __version__
+
+# Read version from _version.py
+with open('activity_tracker/_version.py', 'r') as f:
+    exec(f.read())
 
 setup(
     name="activity-tracker",
