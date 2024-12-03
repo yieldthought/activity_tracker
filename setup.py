@@ -18,5 +18,6 @@ setup(
     install_requires=[
         'pynput>=1.7.0',
         'pyobjc-framework-Quartz>=10.0',
+        'colorama>=0.4.6',
     ],
 )

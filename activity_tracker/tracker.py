@@ -1,5 +1,7 @@
 import time
+import shutil
 from datetime import datetime
+from colorama import init, Fore, Style
 from Quartz.CoreGraphics import (
     CGWindowListCopyWindowInfo,
     kCGWindowListOptionOnScreenOnly,
@@ -16,6 +18,8 @@ class ActivityTracker:
         self.last_window = None
         self.current_activity_start = datetime.now()
         self.current_activity_type = None
+        init()  # Initialize colorama
+        self.terminal_width = shutil.get_terminal_size().columns
         
         # Setup activity monitors
         self.mouse_listener = mouse.Listener(on_move=self.on_activity)
@@ -95,13 +99,36 @@ class ActivityTracker:
                         def format_time(seconds):
                             h = seconds // 3600
                             m = (seconds % 3600) // 60
-                            return f"{h}h {m}m"
+                            return f"{h:02d}h {m:02d}m"
 
-                        print(f"\rCoding: {percentages['coding']:0.1f}% ({format_time(stats['coding'])} - {stats['coding']}s) | "
-                              f"Talking: {percentages['talking']:0.1f}% ({format_time(stats['talking'])} - {stats['talking']}s) | "
-                              f"Other: {percentages['other']:0.1f}% ({format_time(stats['other'])} - {stats['other']}s) | "
-                              f"Idle: {percentages['idle']:0.1f}% ({format_time(stats['idle'])} - {stats['idle']}s)", 
-                              end='', flush=True)
+                        # Clear line and create separator
+                        print('\r' + ' ' * self.terminal_width, end='')
+                        print('\r' + Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL)
+                        
+                        # Show current activity
+                        activity_colors = {
+                            'coding': Fore.GREEN,
+                            'talking': Fore.BLUE,
+                            'other': Fore.YELLOW,
+                            'idle': Fore.RED
+                        }
+                        current_color = activity_colors.get(self.current_activity_type, Fore.WHITE)
+                        print(f"\r{Style.BRIGHT}Current Activity: {current_color}{self.current_activity_type.upper()}{Style.RESET_ALL}")
+                        
+                        # Show statistics
+                        stats_line = (
+                            f"{Fore.GREEN}Coding: {percentages['coding']:5.1f}% ({format_time(stats['coding'])}) {Style.RESET_ALL}| "
+                            f"{Fore.BLUE}Talking: {percentages['talking']:5.1f}% ({format_time(stats['talking'])}) {Style.RESET_ALL}| "
+                            f"{Fore.YELLOW}Other: {percentages['other']:5.1f}% ({format_time(stats['other'])}) {Style.RESET_ALL}| "
+                            f"{Fore.RED}Idle: {percentages['idle']:5.1f}% ({format_time(stats['idle'])}){Style.RESET_ALL}"
+                        )
+                        print(f"\r{stats_line}")
+                        
+                        # Bottom separator
+                        print(Style.BRIGHT + '─' * self.terminal_width + Style.RESET_ALL, end='', flush=True)
+                        
+                        # Move cursor up 3 lines to overwrite on next update
+                        print('\033[3A', end='')
 
                 time.sleep(1)  # Check every second
 
