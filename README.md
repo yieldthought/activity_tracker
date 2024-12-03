@@ -15,7 +15,7 @@ A simple and efficient work activity tracking application that helps you monitor
 You can install Activity Tracker directly from PyPI:
 
 ```bash
-pip install atrack
+pip install mac-activity-tracker
 ```
 
 Or install from source:
@@ -31,7 +31,7 @@ pip install -e .
 Start tracking your activities:
 
 ```bash
-atrack
+mac-activity-tracker
 ```
 
 This will begin monitoring your activity and display real-time statistics. Press Ctrl+C to stop tracking and see a summary.
