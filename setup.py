@@ -7,12 +7,12 @@ with open('activity_tracker/_version.py', 'r') as f:
     exec(f.read(), version_dict)
 
 setup(
-    name="activity-tracker",
+    name="atrack",
     version=version_dict['__version__'],
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'activity_tracker=activity_tracker.tracker:main',
+            'atrack=atrack.tracker:main',
         ],
     },
     install_requires=[
