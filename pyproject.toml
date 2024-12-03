@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "activity-tracker"
+version = "0.1.0"
 description = "Monitor and analyze your daily work activities"
 readme = "README.md"
 requires-python = ">=3.7"
