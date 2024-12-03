@@ -7,7 +7,7 @@ from Quartz.CoreGraphics import (
 )
 from pynput import mouse, keyboard
 from activity_tracker.database import DatabaseHandler
-from activity_tracker.config import CODING_APPS, TALKING_APPS, IDLE_TIMEOUT, DB_PATH
+from activity_tracker.config import CODING_APPS, TALKING_APPS, IDLE_TIMEOUT, DB_PATH, DEBUG
 
 class ActivityTracker:
     def __init__(self):
@@ -77,30 +77,31 @@ class ActivityTracker:
                 # Always log current activity to keep stats current
                 self.log_current_activity()
 
-                # Update display every second
-                summary, total_time = self.db.get_summary()
-                if total_time > 0:
-                    stats = {
-                        'coding': summary.get('coding', 0),
-                        'talking': summary.get('talking', 0),
-                        'other': summary.get('other', 0),
-                        'idle': summary.get('idle', 0)
-                    }
-                    
-                    # Calculate percentages
-                    percentages = {k: (v / total_time) * 100 for k, v in stats.items()}
-                    
-                    # Convert seconds to hours and minutes for display
-                    def format_time(seconds):
-                        h = seconds // 3600
-                        m = (seconds % 3600) // 60
-                        return f"{h}h {m}m"
+                if DEBUG:
+                    # Update display every second in debug mode
+                    summary, total_time = self.db.get_summary()
+                    if total_time > 0:
+                        stats = {
+                            'coding': summary.get('coding', 0),
+                            'talking': summary.get('talking', 0),
+                            'other': summary.get('other', 0),
+                            'idle': summary.get('idle', 0)
+                        }
+                        
+                        # Calculate percentages
+                        percentages = {k: (v / total_time) * 100 for k, v in stats.items()}
+                        
+                        # Convert seconds to hours and minutes for display
+                        def format_time(seconds):
+                            h = seconds // 3600
+                            m = (seconds % 3600) // 60
+                            return f"{h}h {m}m"
 
-                    print(f"\rCoding: {percentages['coding']:0.1f}% ({format_time(stats['coding'])} - {stats['coding']}s) | "
-                          f"Talking: {percentages['talking']:0.1f}% ({format_time(stats['talking'])} - {stats['talking']}s) | "
-                          f"Other: {percentages['other']:0.1f}% ({format_time(stats['other'])} - {stats['other']}s) | "
-                          f"Idle: {percentages['idle']:0.1f}% ({format_time(stats['idle'])} - {stats['idle']}s)", 
-                          end='', flush=True)
+                        print(f"\rCoding: {percentages['coding']:0.1f}% ({format_time(stats['coding'])} - {stats['coding']}s) | "
+                              f"Talking: {percentages['talking']:0.1f}% ({format_time(stats['talking'])} - {stats['talking']}s) | "
+                              f"Other: {percentages['other']:0.1f}% ({format_time(stats['other'])} - {stats['other']}s) | "
+                              f"Idle: {percentages['idle']:0.1f}% ({format_time(stats['idle'])} - {stats['idle']}s)", 
+                              end='', flush=True)
 
                 time.sleep(1)  # Check every second
 

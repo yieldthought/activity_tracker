@@ -7,3 +7,6 @@ IDLE_TIMEOUT = 300
 
 # Database configuration
 DB_PATH = 'activity_logs.db'
+
+# Debug mode
+DEBUG = False
