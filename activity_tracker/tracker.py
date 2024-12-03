@@ -6,8 +6,8 @@ from Quartz.CoreGraphics import (
     kCGNullWindowID
 )
 from pynput import mouse, keyboard
-from database import DatabaseHandler
-from config import CODING_APPS, TALKING_APPS, IDLE_TIMEOUT, DB_PATH
+from activity_tracker.database import DatabaseHandler
+from activity_tracker.config import CODING_APPS, TALKING_APPS, IDLE_TIMEOUT, DB_PATH
 
 class ActivityTracker:
     def __init__(self):
