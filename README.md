@@ -1,6 +1,6 @@
-# Activity Tracker
+# Mac Activity Tracker
 
-A simple and efficient work activity tracking application that helps you monitor and manage your daily work activities.
+A simple and efficient work activity tracking application for macOS that helps you monitor and manage your daily work activities.
 
 ## Features
 
@@ -21,8 +21,8 @@ pip install mac-activity-tracker
 Or install from source:
 
 ```bash
-git clone https://github.com/yourusername/activity_tracker.git
-cd activity_tracker
+git clone https://github.com/yourusername/mac-activity-tracker.git
+cd mac-activity-tracker
 pip install -e .
 ```
 
@@ -38,7 +38,7 @@ This will begin monitoring your activity and display real-time statistics. Press
 
 ## Configuration
 
-The default configuration can be found in `activity_tracker/config.py`. You can modify:
+The default configuration can be found in `mac_activity_tracker/config.py`. You can modify:
 
 - CODING_APPS: List of applications considered as coding activity
 - TALKING_APPS: List of applications considered as communication
@@ -50,8 +50,8 @@ The default configuration can be found in `activity_tracker/config.py`. You can 
 To set up the development environment:
 
 ```bash
-git clone https://github.com/yourusername/activity_tracker.git
-cd activity_tracker
+git clone https://github.com/yourusername/mac-activity-tracker.git
+cd mac-activity-tracker
 pip install -e ".[dev]"
 ```
 
