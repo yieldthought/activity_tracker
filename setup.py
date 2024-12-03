@@ -2,12 +2,13 @@ from setuptools import setup, find_packages
 import os
 
 # Read version from _version.py
+version_dict = {}
 with open('activity_tracker/_version.py', 'r') as f:
-    exec(f.read())
+    exec(f.read(), version_dict)
 
 setup(
     name="activity-tracker",
-    version=__version__,
+    version=version_dict['__version__'],
     packages=find_packages(),
     entry_points={
         'console_scripts': [
