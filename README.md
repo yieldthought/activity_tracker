@@ -5,27 +5,54 @@ A simple and efficient work activity tracking application that helps you monitor
 ## Features
 
 - Track time spent on different activities
-- Categorize work tasks
-- Generate activity reports
+- Automatic categorization of applications (coding, talking, other)
+- Idle time detection
+- Activity summaries and reports
 - Simple and intuitive interface
 
 ## Installation
 
-1. Clone the repository:
+You can install Activity Tracker directly from PyPI:
+
 ```bash
-git clone https://github.com/yourusername/activity_tracker.git
+pip install activity-tracker
 ```
 
-2. Navigate to the project directory:
+Or install from source:
+
 ```bash
+git clone https://github.com/yourusername/activity_tracker.git
 cd activity_tracker
+pip install -e .
 ```
 
 ## Usage
 
-Run the application to start tracking your activities:
+Start tracking your activities:
+
 ```bash
-python activity_tracker/tracker.py
+activity-tracker
+```
+
+This will begin monitoring your activity and display real-time statistics. Press Ctrl+C to stop tracking and see a summary.
+
+## Configuration
+
+The default configuration can be found in `activity_tracker/config.py`. You can modify:
+
+- CODING_APPS: List of applications considered as coding activity
+- TALKING_APPS: List of applications considered as communication
+- IDLE_TIMEOUT: Time in seconds before considering the system idle
+- DB_PATH: Location of the SQLite database file
+
+## Development
+
+To set up the development environment:
+
+```bash
+git clone https://github.com/yourusername/activity_tracker.git
+cd activity_tracker
+pip install -e ".[dev]"
 ```
 
 ## License

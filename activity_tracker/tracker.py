@@ -119,10 +119,13 @@ class ActivityTracker:
             percentage = (duration / total_time * 100) if total_time > 0 else 0
             print(f"{activity_type}: {hours}h {minutes}m ({percentage:.1f}%)")
 
-if __name__ == '__main__':
+def main():
     tracker = ActivityTracker()
     try:
         print("Activity tracking started. Press Ctrl+C to stop and see summary.")
         tracker.start()
     except KeyboardInterrupt:
         tracker.print_summary()
+
+if __name__ == '__main__':
+    main()
