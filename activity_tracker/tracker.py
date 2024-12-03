@@ -150,7 +150,6 @@ class ActivityTracker:
 def main():
     tracker = ActivityTracker()
     try:
-        print("Activity tracking started. Press Ctrl+C to stop and see summary.")
         tracker.start()
     except KeyboardInterrupt:
         tracker.print_summary()
