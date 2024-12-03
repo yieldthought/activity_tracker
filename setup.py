@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'activity-tracker=activity_tracker.tracker:main',
+            'activity_tracker=activity_tracker.tracker:main',
         ],
     },
     install_requires=[
