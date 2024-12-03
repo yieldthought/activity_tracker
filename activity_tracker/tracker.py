@@ -116,11 +116,18 @@ class ActivityTracker:
                         print(f"\r{Style.BRIGHT}Current Activity: {current_color}{self.current_activity_type.upper()}{Style.RESET_ALL}")
                         
                         # Show statistics
+                        # Format each stat differently based on debug mode
+                        def format_stat(activity, percentage, seconds):
+                            time_str = format_time(seconds)
+                            if DEBUG:
+                                return f"{percentage:5.1f}% ({time_str} - {seconds}s)"
+                            return f"{percentage:5.1f}% ({time_str})"
+                            
                         stats_line = (
-                            f"{Fore.GREEN}Coding: {percentages['coding']:5.1f}% ({format_time(stats['coding'])}) {Style.RESET_ALL}| "
-                            f"{Fore.BLUE}Talking: {percentages['talking']:5.1f}% ({format_time(stats['talking'])}) {Style.RESET_ALL}| "
-                            f"{Fore.YELLOW}Other: {percentages['other']:5.1f}% ({format_time(stats['other'])}) {Style.RESET_ALL}| "
-                            f"{Fore.RED}Idle: {percentages['idle']:5.1f}% ({format_time(stats['idle'])}){Style.RESET_ALL}"
+                            f"{Fore.GREEN}Coding: {format_stat(stats['coding'], percentages['coding'], stats['coding'])} {Style.RESET_ALL}| "
+                            f"{Fore.BLUE}Talking: {format_stat(stats['talking'], percentages['talking'], stats['talking'])} {Style.RESET_ALL}| "
+                            f"{Fore.YELLOW}Other: {format_stat(stats['other'], percentages['other'], stats['other'])} {Style.RESET_ALL}| "
+                            f"{Fore.RED}Idle: {format_stat(stats['idle'], percentages['idle'], stats['idle'])}{Style.RESET_ALL}"
                         )
                         print(f"\r{stats_line}")
                         
