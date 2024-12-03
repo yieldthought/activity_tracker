@@ -25,7 +25,7 @@ cd activity_tracker
 
 Run the application to start tracking your activities:
 ```bash
-python main.py
+python activity_tracker/tracker.py
 ```
 
 ## License
