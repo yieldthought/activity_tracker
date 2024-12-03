@@ -107,7 +107,7 @@ class ActivityTracker:
                     # Show current activity
                     activity_colors = {
                         'coding': Fore.GREEN,
-                        'talking': Fore.BLUE,
+                        'talking': Fore.CYAN,
                         'other': Fore.YELLOW,
                         'idle': Fore.RED
                     }
@@ -124,7 +124,7 @@ class ActivityTracker:
                         
                     stats_line = (
                         f"{Fore.GREEN}Coding: {format_stat(stats['coding'], percentages['coding'], stats['coding'])} {Style.RESET_ALL}| "
-                        f"{Fore.BLUE}Talking: {format_stat(stats['talking'], percentages['talking'], stats['talking'])} {Style.RESET_ALL}| "
+                        f"{Fore.CYAN}Talking: {format_stat(stats['talking'], percentages['talking'], stats['talking'])} {Style.RESET_ALL}| "
                         f"{Fore.YELLOW}Other: {format_stat(stats['other'], percentages['other'], stats['other'])} {Style.RESET_ALL}| "
                         f"{Fore.RED}Idle: {format_stat(stats['idle'], percentages['idle'], stats['idle'])}{Style.RESET_ALL}"
                     )
