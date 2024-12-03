@@ -3,7 +3,7 @@ import os
 
 # Read version from _version.py
 version_dict = {}
-with open('activity_tracker/_version.py', 'r') as f:
+with open('atrack/_version.py', 'r') as f:
     exec(f.read(), version_dict)
 
 setup(
